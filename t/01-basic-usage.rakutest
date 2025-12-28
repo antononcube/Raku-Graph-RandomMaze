@@ -4,24 +4,30 @@ use Graph;
 use Graph::Classes;
 use Test;
 
-subtest 'rectangular maze' => {
-    my %maze = random-maze(shape => 'rectangular', rows => 3, columns => 4);
+subtest {
+    ok random-maze(shape => 'rectangular', rows => 3, columns => 4);
+    ok random-maze(4, shape => 'rectangular');
+    ok random-maze([4, 5]);
+}, 'signatures';
+
+subtest {
+    my %maze = random-maze(shape => 'rectangular', rows => 3, columns => 4, properties => Whatever);
     isa-ok %maze<walls>, Graph, 'walls graph produced';
     isa-ok %maze<paths>, Graph, 'path(ways) graph produced';
     isa-ok %maze<solution>, List:D, 'solution path produced';
     is-deeply %maze<dimensions>, [3, 4], 'dimensions recorded';
     is %maze<start>, '0_0', 'start vertex';
     is %maze<end>, '1_2', 'end vertex';
-}
+}, 'rectangular maze';
 
 
-subtest 'hexagonal maze' => {
-    my %maze = random-maze(shape => 'hexagonal', rows => 3, columns => 4);
+subtest {
+    my %maze = random-maze(shape => 'hexagonal', rows => 3, columns => 4, props => Whatever);
     isa-ok %maze<walls>, Graph, 'walls graph produced';
     isa-ok %maze<paths>, Graph, 'path(ways) graph produced';
     isa-ok %maze<solution>, List:D, 'solution path produced';
     is-deeply %maze<dimensions>, [3, 4], 'dimensions recorded';
     ok %maze<start>.defined && %maze<end>.defined, 'start/end vertices exist';
-}
+}, 'hexagonal maze';
 
 done-testing;

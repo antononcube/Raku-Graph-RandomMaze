@@ -8,31 +8,67 @@ use Math::Nearest;
 use Data::Generators;
 
 
-our sub random-maze(
+proto sub random-maze(|) is export {*}
+
+my @expectedProperties = <type dimensions walls paths solution start end>;
+multi sub random-maze(Str:D $p where $p.lc ∈ <props properties>) {
+    return @expectedProperties;
+}
+
+multi sub random-maze(Int:D $rows, *%args) {
+    return random-maze(:$rows, columns => $rows, |%args)
+}
+
+multi sub random-maze((Int:D $rows, Int:D $columns), *%args) {
+    return random-maze(:$rows, :$columns, |%args)
+}
+
+multi sub random-maze(
     Int :n(:$rows) = 5,
     :m(:$columns) is copy = Whatever,
     Str :shape(:$type) = 'rectangular',
     :$weight-range = 1000,
     Bool :$include-solution = True,
-) is export {
+    :props(:$properties) = 'walls') {
 
     if $columns.isa(Whatever) { $columns = $rows }
     die "The argument \$columns is expected to be a positive integer or Whatever." unless $columns ~~ Int:D;
     die "Rows and columns must be greater than 1." unless $rows > 1 && $columns > 1;
 
-    given $type.lc {
+    my %res = do given $type.lc {
         when any(<rectangular rectangle rect grid>) {
-            return rectangular-maze($rows, $columns);
+            rectangular-maze($rows, $columns);
         }
         when any(<hexagonal hex>) {
-            return hexagonal-maze($rows, $columns);
+            hexagonal-maze($rows, $columns);
         }
         default {
             die "Unknown maze shape '$type'. Use 'rectangular' or 'hexagonal'.";
         }
     }
+
+    return do given $properties {
+        when $_.isa(Whatever) { %res }
+
+        when $_ ~~ Str:D && $_ ∈ @expectedProperties { %res{$_} }
+
+        when $_ ~~ Str:D {
+            die "When the properties spec is a string then it is expected to be one of \"{@expectedProperties.join('", "')}\"."
+        }
+
+        when $_ ~~ (Array:D | List:D | Seq:D) && $_.all ~~ Str:D {
+            my @props = ($_ (&) @expectedProperties).keys;
+            die 'No known properties are specified.' unless @props.elems > 0;
+            %res.grep(*.key ∈ @props).Hash
+        }
+
+        default {
+            die 'The properties argument is expected to be a string, a list of strings, or Whatever.'
+        }
+    }
 }
 
+our $random-labyrinth is export = &random-maze;
 
 sub rectangular-maze(Int:D $rows, Int:D $cols) {
     my $walls-grid = Graph::Grid.new($rows, $cols, prefix => 'w', :!directed);
