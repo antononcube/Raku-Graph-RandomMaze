@@ -69,6 +69,12 @@ sub rectangular-maze(Int:D $rows, Int:D $cols) {
 
     my @solution = |$paths.find-shortest-path('0_0', "{$rows-2}_{$cols-2}");
 
+    # "Open" start and end rectangular cells
+    my @wall-vertexes = $walls.vertex-list.sort({ $_.substr(1).Int });
+    my $start = @wall-vertexes.head;
+    my $end = @wall-vertexes.tail;
+    $walls.vertex-delete([$start, $end]);
+
     return %(
         :type('rectangular'),
         :dimensions([$rows, $cols]),
@@ -111,7 +117,11 @@ sub hexagonal-maze(Int:D $rows, Int:D $cols) {
     my @ordered = $paths.vertex-list.sort(*.Int);
     my @solution = $paths.find-shortest-path(|@ordered[0, *-1]);
 
-    #my @wall-order = $maze.vertex-list.sort({ $_ ~~ /^w(\d+)/; $0.Int });
+    # "Open" start and end hexagonal cells
+    my @wall-vertexes = $walls.vertex-list.sort({ $_.substr(1).Int });
+    my $start = @wall-vertexes.head;
+    my $end = @wall-vertexes.tail;
+    $walls.vertex-delete([$start, $end]);
 
     return %(
         :type('hexagonal'),
