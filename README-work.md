@@ -16,9 +16,6 @@ use Graph::RandomMaze;
 
 my %rect = random-maze(rows => 8, columns => 16, type => 'rectangular');
 ```
-```
-# {dimensions => [8 16], end => 6_14, paths => Graph(vertexes => 105, edges => 104, directed => False), solution => [0_0 0_1 0_2 1_2 1_3 1_4 1_5 0_5 0_6 0_7 1_7 2_7 2_6 3_6 3_7 4_7 4_8 3_8 2_8 2_9 3_9 3_10 3_11 4_11 5_11 6_11 6_12 5_12 5_13 5_14 6_14], start => 0_0, type => rectangular, walls => Graph(vertexes => 128, edges => 128, directed => False)}
-```
 
 ```raku, eval=FALSE
 my %opts = engine => 'neato', :8size, vertex-shape => 'point', edge-thickness => 12;
@@ -31,9 +28,6 @@ my %opts = engine => 'neato', :8size, vertex-shape => 'point', edge-thickness =>
 
 ```raku
 my %hex = random-maze(rows => 8, columns => 16, type => 'hexagonal');
-```
-```
-# {dimensions => [8 16], end => 127, paths => Graph(vertexes => 128, edges => 127, directed => False), solution => [0 2 1 3 5 8 10 17 14 22 30 33 37 45 53 49 54 62 65 61 64 69 72 77 73 78 86 89 93 96 101 104 109 116 119 122 124 126 127], start => 0, type => hexagonal, walls => Graph(vertexes => 304, edges => 304, directed => False)}
 ```
 
 ```raku, eval=FALSE
