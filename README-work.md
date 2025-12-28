@@ -4,7 +4,7 @@ Raku package for random maze making using graphs.
 
 The package provides the function `random-maze` the implementation of which is explained in [AA1]. 
 
-**Remark:** Since the package "Graph", [AAp1] is used for the implementation the package name is
+**Remark:** Since the package "Graph", [AAp1], is used for the implementation the package name is
 "Graph::RandomMaze".
 
 ## Usage
