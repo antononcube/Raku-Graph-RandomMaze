@@ -11,6 +11,7 @@ use Data::Generators;
 # Random maze
 #==========================================================
 
+#| Create random mazes using rectangular or hexagonal grid graphs.
 proto sub random-maze(|) is export {*}
 
 my @expectedProperties = <type dimensions walls paths solution start end>;
@@ -215,7 +216,7 @@ multi sub display-maze(%maze, *%opts) {
         display-maze(%maze<paths>, |%opts)
 
     } else {
-        die 'Do not know how to process the argument.' ~
-            'If map argument is given at least one of the keys "walls" or "path" must be present.'
+        die 'Do not know how to process the first argument. ' ~
+            'If the first argument is a hashmap then at least one of the keys "walls" or "path" must be present.'
     }
 }
