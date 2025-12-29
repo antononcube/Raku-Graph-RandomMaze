@@ -7,6 +7,9 @@ use Graph::Classes;
 use Math::Nearest;
 use Data::Generators;
 
+#==========================================================
+# Random maze
+#==========================================================
 
 proto sub random-maze(|) is export {*}
 
@@ -70,6 +73,10 @@ multi sub random-maze(
 
 our $random-labyrinth is export = &random-maze;
 
+#==========================================================
+# Rectangular maze
+#==========================================================
+
 sub rectangular-maze(Int:D $rows, Int:D $cols) {
     my $walls-grid = Graph::Grid.new($rows, $cols, prefix => 'w', :!directed);
 
@@ -122,6 +129,10 @@ sub rectangular-maze(Int:D $rows, Int:D $cols) {
     );
 }
 
+#==========================================================
+# Hexagonal maze
+#==========================================================
+
 sub hexagonal-maze(Int:D $rows, Int:D $cols) {
     my $walls-grid = Graph::HexagonalGrid.new($rows, $cols, prefix => 'w', :!directed);
 
@@ -168,4 +179,43 @@ sub hexagonal-maze(Int:D $rows, Int:D $cols) {
         :end(@solution.tail),
         :@solution,
     );
+}
+
+#==========================================================
+# Display maze
+#==========================================================
+
+#| Displays graphs and output hashmaps of &random-maze.
+proto sub display-maze($maze, *%opts) is export {*}
+
+multi sub display-maze(Graph:D $maze, *%opts) {
+    $maze.dot(|%opts):svg
+}
+
+multi sub display-maze(%maze, *%opts) {
+    if (%maze<walls>:exists) && (%maze<paths>:exists) && (%maze<solution>:exists) {
+
+        my $gSolution = %maze<paths>.subgraph(%maze<solution>);
+        my $g = %maze<walls>.union($gSolution);
+        my $highlight = $gSolution;
+        $g.dot(:$highlight, |%opts):svg
+
+    } elsif (%maze<paths>:exists) && (%maze<solution>:exists) {
+
+        my $gSolution = %maze<paths>.subgraph(%maze<solution>);
+        my $highlight = $gSolution;
+        %maze<paths>.dot(:$highlight, |%opts):svg
+
+    } elsif %maze<walls>:exists {
+
+        display-maze(%maze<walls>, |%opts)
+
+    } elsif %maze<paths>:exists {
+
+        display-maze(%maze<paths>, |%opts)
+
+    } else {
+        die 'Do not know how to process the argument.' ~
+            'If map argument is given at least one of the keys "walls" or "path" must be present.'
+    }
 }
