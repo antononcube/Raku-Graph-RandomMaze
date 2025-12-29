@@ -14,7 +14,7 @@ The package provides the function `random-maze` the implementation of which is e
 ```raku
 use Graph::RandomMaze;
 
-my %rect = random-maze(rows => 8, columns => 16, type => 'rectangular');
+my %rect = random-maze(rows => 8, columns => 16, type => 'rectangular', properties => Whatever);
 ```
 
 ```raku, eval=FALSE
@@ -27,7 +27,7 @@ my %opts = engine => 'neato', :8size, vertex-shape => 'point', edge-thickness =>
 ### Hexagonal maze
 
 ```raku
-my %hex = random-maze(rows => 8, columns => 16, type => 'hexagonal');
+my %hex = random-maze(rows => 8, columns => 16, type => 'hexagonal', properties => Whatever);
 ```
 
 ```raku, eval=FALSE
@@ -44,6 +44,18 @@ The returned hash contains:
 - Bookkeeping keys (`shape`, `dimensions`, `start`, `end`)
 
 ----
+
+## CLI
+
+The package provides the Command Line Interface (CLI) script `random-maze` for making random mazes 
+and exporting them in different formats. Here is the usage message:
+
+```shell
+random-maze --help
+```
+
+----
+
 
 ## References
 
