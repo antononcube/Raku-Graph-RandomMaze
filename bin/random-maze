@@ -1,0 +1,42 @@
+#!/usr/bin/env raku
+use v6.d;
+
+use Graph::RandomMaze;
+use Graph;
+
+my %*SUB-MAIN-OPTS = :named-anywhere;
+
+#-----------------------------------------------------------
+
+#| Generates random mazes and exports to SVG, JSON, or Raku code or code files.
+sub MAIN(Int $rows,                           #= Walls grid graph rows.
+         Int $columns,                        #= Walls grid graph columns.
+         Str :$type = 'rectangular',          #= Type of graph grid to use. (One of 'rectangular' or 'hexagonal'.)
+         Str :t(:format(:$to)) = 'Whatever',  #= Format to convert to. (One of 'json', 'raku', 'svg', 'wl', 'Whatever'.)
+         Str :props(:$properties) = 'walls',  #= Properties separated by comma.
+         Str :o(:$output) = '',               #= Output file; if an empty string then the result is printed to stdout.
+         ) {
+
+    my $res = random-maze(:$rows, :$columns, :$type, :$properties);
+
+    # If $to is 'raku':
+    # - Export $res.raku
+
+    # If $res is a Graph object:
+    # - If $to is 'wl' export $res.wl
+    # - If $to is 'svg' process the result with &display-maze and export it
+    # - If $to is 'json' convert export $res.edge(:dataset) to JSON and export it
+
+    # If $res is a hashmap:
+    # - If $to is 'json' convert the graphs in $res with .edge(:dataset) an export $res to JSON
+
+
+    if $output.chars > 0 {
+        spurt($output, $res);
+    } else {
+        say $res;
+    }
+}
+
+
+
