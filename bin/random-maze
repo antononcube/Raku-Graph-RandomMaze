@@ -3,6 +3,7 @@ use v6.d;
 
 use Graph::RandomMaze;
 use Graph;
+use JSON::Fast;
 
 my %*SUB-MAIN-OPTS = :named-anywhere;
 
@@ -15,28 +16,51 @@ sub MAIN(Int $rows,                           #= Walls grid graph rows.
          Str :t(:format(:$to)) = 'Whatever',  #= Format to convert to. (One of 'json', 'raku', 'svg', 'wl', 'Whatever'.)
          Str :props(:$properties) = 'walls',  #= Properties separated by comma.
          Str :o(:$output) = '',               #= Output file; if an empty string then the result is printed to stdout.
+         Str :$engine = 'neato',              #= Graphviz graph layout engine.
          ) {
 
-    my $res = random-maze(:$rows, :$columns, :$type, :$properties);
+    my $prop-spec = $properties;
+    if $properties ~~ Str:D && $properties.contains(',') {
+        $prop-spec = $properties.split(/ \s* ',' \s* /);
+    }
 
-    # If $to is 'raku':
-    # - Export $res.raku
+    my $res = random-maze(:$rows, :$columns, :$type, properties => $prop-spec);
 
-    # If $res is a Graph object:
-    # - If $to is 'wl' export $res.wl
-    # - If $to is 'svg' process the result with &display-maze and export it
-    # - If $to is 'json' convert export $res.edge(:dataset) to JSON and export it
+    my $export = do given $to.lc {
+        when 'raku' { $res.raku }
 
-    # If $res is a hashmap:
-    # - If $to is 'json' convert the graphs in $res with .edge(:dataset) an export $res to JSON
+        when 'wl' {
+            $res ~~ Graph:D ?? $res.wl !! $res
+        }
 
+        when 'svg' { display-maze($res, :$engine) }
+
+        when 'json' {
+            if $res ~~ Graph:D {
+                to-json($res.edge(:dataset))
+            } elsif $res ~~ Map:D {
+                my %converted = $res.map(-> $k, $v {
+                    $k => ($v ~~ Graph:D ?? $v.edge(:dataset) !! $v)
+                }).Hash;
+                to-json(%converted)
+            } else {
+                to-json($res)
+            }
+        }
+
+        default { $res }
+    };
+
+    my $content = do given $export {
+        when Blob { $_ }
+        when Str  { $_ }
+        default   { $_.raku }
+    };
 
     if $output.chars > 0 {
-        spurt($output, $res);
+        spurt($output, $content);
     } else {
-        say $res;
+        say $content;
     }
 }
-
-
 
