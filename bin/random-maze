@@ -9,7 +9,7 @@ my %*SUB-MAIN-OPTS = :named-anywhere;
 
 #-----------------------------------------------------------
 
-#| Generates random mazes and exports to SVG, JSON, or Raku code or code files.
+#| Generates random mazes and exports to JSON, Raku, SVG, or Wolfram Language (WL) code or code files.
 sub MAIN(Int $rows,                           #= Walls grid graph rows.
          Int $columns,                        #= Walls grid graph columns.
          Str :$type = 'rectangular',          #= Type of graph grid to use. (One of 'rectangular' or 'hexagonal'.)
