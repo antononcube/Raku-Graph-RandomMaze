@@ -17,7 +17,7 @@ use Graph::RandomMaze;
 my %rect = random-maze(rows => 8, columns => 16, grid-layout => 'rectangular', properties => Whatever);
 ```
 ```
-# {dimensions => [8 16], end => 6_14, paths => Graph(vertexes => 105, edges => 104, directed => False), solution => [0_0 0_1 0_2 1_2 1_3 1_4 2_4 3_4 3_5 3_6 2_6 2_7 1_7 0_7 0_8 1_8 2_8 3_8 3_9 4_9 4_10 3_10 3_11 4_11 4_12 5_12 5_13 5_14 6_14], start => 0_0, type => rectangular, walls => Graph(vertexes => 126, edges => 124, directed => False)}
+# {dimensions => [8 16], end => 6_14, grid-layout => rectangular, paths => Graph(vertexes => 105, edges => 104, directed => False), solution => [0_0 1_0 2_0 3_0 3_1 2_1 2_2 2_3 2_4 3_4 3_5 3_6 3_7 3_8 2_8 2_9 3_9 3_10 4_10 4_11 3_11 3_12 4_12 5_12 5_13 6_13 6_14], start => 0_0, walls => Graph(vertexes => 126, edges => 124, directed => False)}
 ```
 
 ```raku, eval=FALSE
@@ -33,7 +33,7 @@ my %opts = engine => 'neato', :8size, vertex-shape => 'point', edge-thickness =>
 my %hex = random-maze(rows => 8, columns => 16, type => 'hexagonal', properties => Whatever);
 ```
 ```
-# {dimensions => [8 16], end => 127, paths => Graph(vertexes => 128, edges => 127, directed => False), solution => [0 2 1 3 5 8 14 22 25 29 32 40 48 52 56 61 57 62 66 71 75 83 87 90 95 103 111 118 121 123 125 127], start => 0, type => hexagonal, walls => Graph(vertexes => 302, edges => 300, directed => False)}
+# {dimensions => [8 16], end => 127, grid-layout => hexagonal, paths => Graph(vertexes => 128, edges => 127, directed => False), solution => [0 2 4 9 16 24 32 40 37 41 38 42 47 50 54 58 66 71 74 78 82 90 98 103 106 110 117 114 118 123 126 127], start => 0, walls => Graph(vertexes => 302, edges => 300, directed => False)}
 ```
 
 **Remark:** The option names "type" and "shape" are synonyms of the option "grid-layout".
@@ -49,7 +49,7 @@ The returned hash contains:
 - Carved wall graph (`walls`), 
 - Spanning tree used for carving (`paths`), 
 - Shortest-path solution (`solution`), 
-- Bookkeeping keys (`shape`, `dimensions`, `start`, `end`)
+- Bookkeeping keys (`grid-layout`, `dimensions`, `start`, `end`)
 
 ----
 

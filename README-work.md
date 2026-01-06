@@ -43,7 +43,7 @@ The returned hash contains:
 - Carved wall graph (`walls`), 
 - Spanning tree used for carving (`paths`), 
 - Shortest-path solution (`solution`), 
-- Bookkeeping keys (`shape`, `dimensions`, `start`, `end`)
+- Bookkeeping keys (`grid-layout`, `dimensions`, `start`, `end`)
 
 ----
 
