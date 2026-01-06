@@ -120,7 +120,7 @@ sub rectangular-maze(Int:D $rows, Int:D $cols) {
     $walls.vertex-delete([$start, $end]);
 
     return %(
-        :type('rectangular'),
+        :grid-layout('rectangular'),
         :dimensions([$rows, $cols]),
         :$walls,
         :$paths,
@@ -172,7 +172,7 @@ sub hexagonal-maze(Int:D $rows, Int:D $cols) {
     $walls.vertex-delete([$start, $end]);
 
     return %(
-        :type('hexagonal'),
+        :grid-layout('hexagonal'),
         :dimensions([$rows, $cols]),
         :$walls,
         :$paths,

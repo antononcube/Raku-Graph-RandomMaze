@@ -24,6 +24,7 @@ subtest {
 
 subtest {
     my %maze = random-maze(type => 'hexagonal', rows => 3, columns => 4, props => Whatever);
+    is %maze<grid-layout>, 'hexagonal', 'correct cell shape';
     isa-ok %maze<walls>, Graph, 'walls graph produced';
     isa-ok %maze<paths>, Graph, 'path(ways) graph produced';
     isa-ok %maze<solution>, List:D, 'solution path produced';
