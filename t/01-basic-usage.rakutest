@@ -6,7 +6,8 @@ use Test;
 
 subtest {
     ok random-maze(shape => 'rectangular', rows => 3, columns => 4);
-    ok random-maze(4, shape => 'rectangular');
+    ok random-maze(4, grid-layout => 'rectangular');
+    ok random-maze(4, type => 'hexagonal');
     ok random-maze([4, 5]);
 }, 'signatures';
 
@@ -22,7 +23,7 @@ subtest {
 
 
 subtest {
-    my %maze = random-maze(shape => 'hexagonal', rows => 3, columns => 4, props => Whatever);
+    my %maze = random-maze(type => 'hexagonal', rows => 3, columns => 4, props => Whatever);
     isa-ok %maze<walls>, Graph, 'walls graph produced';
     isa-ok %maze<paths>, Graph, 'path(ways) graph produced';
     isa-ok %maze<solution>, List:D, 'solution path produced';
