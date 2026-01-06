@@ -14,7 +14,7 @@ The package provides the function `random-maze` the implementation of which is e
 ```raku
 use Graph::RandomMaze;
 
-my %rect = random-maze(rows => 8, columns => 16, type => 'rectangular', properties => Whatever);
+my %rect = random-maze(rows => 8, columns => 16, grid-layout => 'rectangular', properties => Whatever);
 ```
 
 ```raku, eval=FALSE
@@ -29,6 +29,8 @@ my %opts = engine => 'neato', :8size, vertex-shape => 'point', edge-thickness =>
 ```raku
 my %hex = random-maze(rows => 8, columns => 16, type => 'hexagonal', properties => Whatever);
 ```
+
+**Remark:** The "type" and "shape" are synonyms of the option "grid-layout".
 
 ```raku, eval=FALSE
 %opts<edge-thickness> = 32;
@@ -68,3 +70,8 @@ random-maze --help
 [Graph, Raku package](https://github.com/antononcube/Raku-Graph),
 (2024-2025),
 [GitHub/antononcube](https://github.com/antononcube).
+
+[AAf1] Anton Antonov,
+[RandomLabyrinth](),
+(2026),
+[Wolfram Function Repository](https://resources.wolframcloud.com/FunctionRepositor).

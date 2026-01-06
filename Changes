@@ -1,4 +1,8 @@
 Changes of the Raku package "Graph::RandomMaze"
 
+2026-01-06 0.0.2
+    - To specify the graph cells' shape these three synonym options can be used: <grid-layout type shape>.
+    - Minor documentation changes / additions.
+
 2025-12-28 0.0.1
     - First version.
