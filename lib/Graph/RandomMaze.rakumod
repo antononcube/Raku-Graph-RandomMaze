@@ -30,7 +30,7 @@ multi sub random-maze((Int:D $rows, Int:D $columns), *%args) {
 multi sub random-maze(
     Int :n(:$rows) = 5,
     :m(:$columns) is copy = Whatever,
-    Str :shape(:$type) = 'rectangular',
+    Str :shape(:type(:$grid-layout)) = 'rectangular',
     :$weight-range = 1000,
     Bool :$include-solution = True,
     :props(:$properties) = 'walls') {
@@ -39,7 +39,7 @@ multi sub random-maze(
     die "The argument \$columns is expected to be a positive integer or Whatever." unless $columns ~~ Int:D;
     die "Rows and columns must be greater than 1." unless $rows > 1 && $columns > 1;
 
-    my %res = do given $type.lc {
+    my %res = do given $grid-layout.lc {
         when any(<rectangular rectangle rect grid>) {
             rectangular-maze($rows, $columns);
         }
@@ -47,7 +47,7 @@ multi sub random-maze(
             hexagonal-maze($rows, $columns);
         }
         default {
-            die "Unknown maze shape '$type'. Use 'rectangular' or 'hexagonal'.";
+            die "Unknown maze grid layout '$grid-layout'. Use 'rectangular' or 'hexagonal'.";
         }
     }
 
