@@ -30,7 +30,7 @@ my %opts = engine => 'neato', :8size, vertex-shape => 'point', edge-thickness =>
 my %hex = random-maze(rows => 8, columns => 16, type => 'hexagonal', properties => Whatever);
 ```
 
-**Remark:** The "type" and "shape" are synonyms of the option "grid-layout".
+**Remark:** The option names "type" and "shape" are synonyms of the option "grid-layout".
 
 ```raku, eval=FALSE
 %opts<edge-thickness> = 32;

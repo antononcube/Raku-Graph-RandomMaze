@@ -36,7 +36,7 @@ my %hex = random-maze(rows => 8, columns => 16, type => 'hexagonal', properties 
 # {dimensions => [8 16], end => 127, paths => Graph(vertexes => 128, edges => 127, directed => False), solution => [0 2 1 3 5 8 14 22 25 29 32 40 48 52 56 61 57 62 66 71 75 83 87 90 95 103 111 118 121 123 125 127], start => 0, type => hexagonal, walls => Graph(vertexes => 302, edges => 300, directed => False)}
 ```
 
-**Remark:** The "type" and "shape" are synonyms of the option "grid-layout".
+**Remark:** The option names "type" and "shape" are synonyms of the option "grid-layout".
 
 ```raku, eval=FALSE
 %opts<edge-thickness> = 32;
