@@ -1,17 +1,17 @@
 {
     "name": "Graph::RandomMaze",
     "description": "Random maze generator on rectangular and hexagonal graphs using Graph.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "raku": "6.d",
     "auth": "zef:antononcube",
-    "provides": {
-        "Graph::RandomMaze": "lib/Graph/RandomMaze.rakumod"
-    },
     "depends": [
         "Graph:ver<0.0.33+>:auth<zef:antononcube>",
         "Math::Nearest:ver<0.0.6>:auth<zef:antononcube>",
         "Data::Generators:ver<0.1.11+>:auth<zef:antononcube>"
     ],
+    "provides": {
+        "Graph::RandomMaze": "lib/Graph/RandomMaze.rakumod"
+    },
     "license": "Artistic-2.0",
     "source-url": "https://github.com/antononcube/Raku-Graph-RandomMaze.git"
 }
