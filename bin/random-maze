@@ -10,13 +10,13 @@ my %*SUB-MAIN-OPTS = :named-anywhere;
 #-----------------------------------------------------------
 
 #| Generates random mazes and exports to JSON, Raku, SVG, or Wolfram Language (WL) code or code files.
-sub MAIN(Int $rows,                           #= Walls grid graph rows.
-         Int $columns,                        #= Walls grid graph columns.
-         Str :$type = 'rectangular',          #= Type of graph grid to use. (One of 'rectangular' or 'hexagonal'.)
-         Str :t(:format(:$to)) = 'Whatever',  #= Format to convert to. (One of 'json', 'raku', 'svg', 'wl', 'Whatever'.)
-         Str :props(:$properties) = 'walls',  #= Properties separated by comma.
-         Str :o(:$output) = '',               #= Output file; if an empty string then the result is printed to stdout.
-         Str :$engine = 'neato',              #= Graphviz graph layout engine.
+sub MAIN(Int $rows,                                          #= Walls grid graph rows.
+         Int $columns,                                       #= Walls grid graph columns.
+         Str :shape(:type(:$grid-layout)) = 'rectangular',   #= Type of graph grid to use. (One of 'rectangular' or 'hexagonal'.)
+         Str :t(:format(:$to)) = 'Whatever',                 #= Format to convert to. (One of 'json', 'raku', 'svg', 'wl', 'Whatever'.)
+         Str :props(:$properties) = 'walls',                 #= Properties separated by comma.
+         Str :o(:$output) = '',                              #= Output file; if an empty string then the result is printed to stdout.
+         Str :$engine = 'neato',                             #= Graphviz graph layout engine.
          ) {
 
     my $prop-spec = $properties;
@@ -24,7 +24,7 @@ sub MAIN(Int $rows,                           #= Walls grid graph rows.
         $prop-spec = $properties.split(/ \s* ',' \s* /);
     }
 
-    my $res = random-maze(:$rows, :$columns, :$type, properties => $prop-spec);
+    my $res = random-maze(:$rows, :$columns, :$grid-layout, properties => $prop-spec);
 
     my $export = do given $to.lc {
         when 'raku' { $res.raku }
